@@ -1,0 +1,67 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the eleven package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: eleven\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-22 17:37+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/dev.getapollo.Eleven.desktop.in:2
+#: data/dev.getapollo.Eleven.metainfo.xml.in:7 src/window.blp:5
+msgid "Eleven"
+msgstr ""
+
+#: data/dev.getapollo.Eleven.desktop.in:8
+msgid "GTK;"
+msgstr ""
+
+#: data/dev.getapollo.Eleven.metainfo.xml.in:8
+msgid "Keep the summary shorter, between 10 and 35 characters"
+msgstr ""
+
+#: data/dev.getapollo.Eleven.metainfo.xml.in:10
+msgid "No description"
+msgstr ""
+
+#: data/dev.getapollo.Eleven.metainfo.xml.in:14
+msgid "Developer name"
+msgstr ""
+
+#: data/dev.getapollo.Eleven.metainfo.xml.in:52
+#: data/dev.getapollo.Eleven.metainfo.xml.in:56
+msgid "A caption"
+msgstr ""
+
+#. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
+#: src/main.py:45
+msgid "translator-credits"
+msgstr ""
+
+#. Translators: os_name is the name of the operating system being installed
+#: src/window.py:21
+#, python-brace-format
+msgid "Welcome to {os_name}!"
+msgstr ""
+
+#: src/window.blp:21
+msgid "_Preferences"
+msgstr ""
+
+#: src/window.blp:26
+msgid "_Keyboard Shortcuts"
+msgstr ""
+
+#: src/window.blp:31
+msgid "_About Eleven"
+msgstr ""
