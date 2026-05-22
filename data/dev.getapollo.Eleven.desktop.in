@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Eleven
+Exec=eleven
+Icon=dev.getapollo.Eleven
+Terminal=false
+Type=Application
+Categories=Utility;
+Keywords=GTK;
+StartupNotify=true
+DBusActivatable=true
