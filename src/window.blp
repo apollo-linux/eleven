@@ -6,25 +6,12 @@ template $ElevenWindow: Adw.ApplicationWindow {
   default-width: 800;
   default-height: 600;
 
-  content: Adw.ToolbarView {
-    [top]
-    Adw.HeaderBar {
-      [end]
-      MenuButton {
-        primary: true;
-        icon-name: "open-menu-symbolic";
-        tooltip-text: _("Main Menu");
-        menu-model: primary_menu;
-      }
+  content: Adw.NavigationView stack {
+    Adw.NavigationPage welcome_view {
+      title: _("Welcome to Apollo");
+
+      $ElevenWelcomePage welcome_page {}
     }
-
-    content: Label label {
-      label: _("Hello, World!");
-
-      styles [
-        "title-1",
-      ]
-    };
   };
 }
 

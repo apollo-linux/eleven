@@ -6,6 +6,7 @@ blueprints = custom_target('blueprints',
   input: files(
     'shortcuts-dialog.blp',
     'window.blp',
+    'pages/welcome.blp'
   ),
   output: '.',
   command: [find_program('blueprint-compiler'), 'batch-compile', '--minify', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
@@ -40,6 +41,7 @@ eleven_sources = [
   '__init__.py',
   'main.py',
   'window.py',
+  'pages/welcome.py',
 ]
 
 install_data(eleven_sources, install_dir: moduledir)
