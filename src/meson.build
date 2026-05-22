@@ -37,11 +37,21 @@ configure_file(
   install_mode: 'rwxr-xr-x'
 )
 
+service_sources = [
+  'service/service.py'
+]
+
+page_sources = [
+  'pages/welcome.py'
+]
+
 eleven_sources = [
   '__init__.py',
   'main.py',
   'window.py',
-  'pages/welcome.py',
 ]
+
+eleven_sources += service_sources
+eleven_sources += page_sources
 
 install_data(eleven_sources, install_dir: moduledir)

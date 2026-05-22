@@ -10,6 +10,7 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk, Gio, Adw
 from .window import ElevenWindow
 
+from .service import ElevenInstallerService
 
 class ElevenApplication(Adw.Application):
     """The main application singleton class."""
@@ -21,6 +22,7 @@ class ElevenApplication(Adw.Application):
         self.create_action('quit', lambda *_: self.quit(), ['<control>q'])
         self.create_action('about', self.on_about_action)
         self.create_action('preferences', self.on_preferences_action)
+        self.service = ElevenInstallerService()
 
     def do_activate(self):
         """Called when the application is activated.
@@ -30,7 +32,7 @@ class ElevenApplication(Adw.Application):
         """
         win = self.props.active_window
         if not win:
-            win = ElevenWindow(application=self)
+            win = ElevenWindow(application=self, service=self.service)
         win.present()
 
     def on_about_action(self, *args):
