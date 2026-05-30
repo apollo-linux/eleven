@@ -38,7 +38,8 @@ configure_file(
 )
 
 service_sources = [
-  'service/service.py'
+  'service/service.py',
+  'service/config.py'
 ]
 
 page_sources = [
