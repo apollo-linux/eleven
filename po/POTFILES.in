@@ -6,3 +6,5 @@ data/dev.getapollo.Eleven.gschema.xml
 src/main.py
 src/window.py
 src/window.blp
+src/pages/welcome.blp
+src/pages/welcome.py

@@ -7,13 +7,30 @@ template $ElevenWelcomePage: Adw.Bin {
         Adw.HeaderBar {
             show-title: false;
         }
-        
-        Label heading {
-            label: "";
 
-            styles [
-                "title-1"
-            ]
+        Adw.StatusPage status_page {
+            Box button_box {
+                halign: center;
+                orientation: horizontal;
+                spacing: 16;
+
+                Button try_btn {
+                    label: _("Try Live");
+
+                    styles [
+                        "pill"
+                    ]
+                }
+
+                Button install_btn {
+                    label: "";
+
+                    styles [
+                        "pill",
+                        "suggested-action"
+                    ]
+                }
+            }
         }
     };
 }

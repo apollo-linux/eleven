@@ -4,7 +4,8 @@ from gi.repository import Adw, Gtk
 class ElevenWelcomePage(Adw.Bin):
     __gtype_name__ = 'ElevenWelcomePage'
 
-    heading = Gtk.Template.Child()
+    status_page = Gtk.Template.Child()
+    install_btn = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
