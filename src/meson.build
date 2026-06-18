@@ -6,7 +6,8 @@ blueprints = custom_target('blueprints',
   input: files(
     'shortcuts-dialog.blp',
     'window.blp',
-    'pages/welcome.blp'
+    'pages/welcome.blp',
+    'pages/disks.blp',
   ),
   output: '.',
   command: [find_program('blueprint-compiler'), 'batch-compile', '--minify', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
@@ -43,7 +44,8 @@ service_sources = [
 ]
 
 page_sources = [
-  'pages/welcome.py'
+  'pages/welcome.py',
+  'pages/disks.py'
 ]
 
 eleven_sources = [

@@ -1,0 +1,25 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $ElevenDisksPage: Adw.Bin {
+child: Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {
+            show-title: false;
+        }
+
+        Box main_box {
+            halign: center;
+            orientation: horizontal;
+            spacing: 16;
+            
+            Label {
+                label: _("Where to Install?");
+
+                styles [
+                    "title-1"
+                ]
+            }
+        }
+    };
+}
