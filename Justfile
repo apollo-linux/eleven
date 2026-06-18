@@ -17,7 +17,7 @@ update_potfiles:
 
     rm -r translation-build
 
-setup_builddir:
+setup-builddir:
     #!/usr/bin/env bash
 
     meson setup --wipe {{build_dir}} --prefix {{install_prefix}}
