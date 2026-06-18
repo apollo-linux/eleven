@@ -1,7 +1,7 @@
 build_dir := env("BUILD_DIR", "_build")
 install_prefix := env("INSTALL_PREFIX", "/usr/local/")
 
-alias setup := setup_builddir
+alias setup := setup-builddir
 
 update_potfiles:
     #!/usr/bin/env bash
