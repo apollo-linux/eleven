@@ -1,3 +1,8 @@
+build_dir := env("BUILD_DIR", "_build")
+install_prefix := env("INSTALL_PREFIX", "/usr/local/")
+
+alias setup := setup_builddir
+
 update_potfiles:
     #!/usr/bin/env bash
 
@@ -11,3 +16,28 @@ update_potfiles:
     meson compile -C translation-build eleven-update-po
 
     rm -r translation-build
+
+setup_builddir:
+    #!/usr/bin/env bash
+
+    meson setup --wipe {{build_dir}} --prefix {{install_prefix}}
+
+install: 
+    #!/usr/bin/env bash
+
+    cd {{build_dir}}
+    sudo meson install
+    cd ..
+
+# Install dependencies on Arch
+install-arch-deps:
+    #!/usr/bin/env bash
+
+    sudo pacman -S \
+        meson \
+        ninja \
+        gtk4 \
+        git \
+        appstream \
+        python-gobject \
+        libadwaita

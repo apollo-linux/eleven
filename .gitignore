@@ -1,2 +1,4 @@
 /subprojects/blueprint-compiler
 .flatpak/
+_build/
+subprojects/.wraplock
