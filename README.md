@@ -1,3 +1,3 @@
 # eleven
 
-A description of this project.
+WIP installer for bootc images, such as Apollo.
