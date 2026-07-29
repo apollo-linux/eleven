@@ -1,14 +1,16 @@
 from pathlib import Path
+import tomllib
 
 class ElevenInstallerServiceConfig():
     config_path = Path("/usr/share/apollo/eleven/config.toml")
 
-    # TODO: use real values and data here
-    os_name = ""
-
     def __init__(self,*kwargs, log):
-        self.os_name = "Apollo"
         self.log = log
+        
+        with open ("/usr/share/apollo/eleven/config.toml", "rb") as config:
+            data = tomllib.load(config)
+
+            self.os_name = data["info"]["os_name"]
 
     def check_config_exists(self, *kwargs) -> bool:
         self.log.new_entry(1, "Checking that the configuration is present")
