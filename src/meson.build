@@ -8,6 +8,7 @@ blueprints = custom_target('blueprints',
     'window.blp',
     'pages/welcome.blp',
     'pages/disks.blp',
+    'pages/experimental.blp'
   ),
   output: '.',
   command: [find_program('blueprint-compiler'), 'batch-compile', '--minify', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
@@ -46,7 +47,8 @@ service_sources = [
 
 page_sources = [
   'pages/welcome.py',
-  'pages/disks.py'
+  'pages/disks.py',
+  'pages/experimental.py'
 ]
 
 eleven_sources = [

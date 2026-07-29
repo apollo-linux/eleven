@@ -11,6 +11,7 @@ class ElevenInstallerServiceConfig():
             data = tomllib.load(config)
 
             self.os_name = data["info"]["os_name"]
+            self.experimental = data["info"]["experimental"]
 
     def check_config_exists(self, *kwargs) -> bool:
         self.log.new_entry(1, "Checking that the configuration is present")

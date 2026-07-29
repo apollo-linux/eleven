@@ -1,0 +1,31 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $ElevenExperimentalPage: Adw.Bin {
+    child: Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {
+            show-title: false;
+            show-start-title-buttons: false;
+            show-end-title-buttons: false;
+        }
+
+        Adw.StatusPage status_page {
+            title: _("Experimental Software");
+
+            Box {
+                halign: center;
+                orientation: horizontal;
+                spacing: 16;
+
+                Button proceed_button {
+                    label: _("Proceed Anyway");
+
+                    styles [
+                        "pill"
+                    ]
+                }
+            }
+        }
+    };
+}
