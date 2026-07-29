@@ -33,7 +33,23 @@ class ElevenApplication(Adw.Application):
         win = self.props.active_window
         if not win:
             win = ElevenWindow(application=self, service=self.service)
-        win.present()
+        
+        if not self.service.config.check_config_exists():
+            # Catch out systems where the configuration is not filled in to ensure that Eleven doesn't mistakenly run in this situation
+            no_config_dialog = Adw.AlertDialog.new(
+                heading = _(
+                    "Installer not configured"
+                ),
+                body = _(
+                    "The configuration file for the installer is not present. If you are an end user, please report this error to your OS vendor."
+                )
+            )
+            no_config_dialog.set_prefer_wide_layout(True)
+            no_config_dialog.add_response("close", _("Close"))
+            no_config_dialog.connect("response", self.close_warning)
+            no_config_dialog.present(None)
+        else:
+            win.present()
 
     def on_about_action(self, *args):
         """Callback for the app.about action."""
@@ -66,6 +82,8 @@ class ElevenApplication(Adw.Application):
         if shortcuts:
             self.set_accels_for_action(f"app.{name}", shortcuts)
 
+    def close_warning(dialog, response, *args):
+        quit(1)
 
 def main(version):
     """The application's entry point."""
