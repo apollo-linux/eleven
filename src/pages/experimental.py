@@ -18,7 +18,7 @@ class ElevenExperimentalPage(Adw.Bin):
 
         # Translators: os_name is the name of the operating system being installed
         self.status_page.set_description(
-            _("This build of {os_name} is experimental software and may not be safe to use in production. You should only continue if you know what you're doing.").format(
+            _("This build of {os_name} is experimental software and may not be safe to use in production. You should only continue if you know what you're doing").format(
                 os_name=self.service.config.os_name
             )
         )
