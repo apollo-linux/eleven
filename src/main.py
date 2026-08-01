@@ -23,7 +23,7 @@ class ElevenApplication(Adw.Application):
         self.create_action('about', self.on_about_action)
         self.create_action('preferences', self.on_preferences_action)
         self.service = ElevenInstallerService()
-        self.service.log.new_entry(1, "Installation is starting now")
+        self.service.log.new_entry(1, "Installation is starting now", 0)
 
     def do_activate(self):
         """Called when the application is activated.

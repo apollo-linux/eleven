@@ -17,14 +17,14 @@ class ElevenInstallerServiceConfig():
                 self.experimental = data["info"]["experimental"]
 
             except KeyError as e:
-                self.log.new_entry(3, _("Configuration has missing parameter: {parameter}").format(parameter=e))
+                self.log.new_entry(3, _("Configuration has missing parameter: {parameter}").format(parameter=e), 12)
 
     def check_config_exists(self, *kwargs) -> bool:
-        self.log.new_entry(1, "Checking that the configuration is present")
+        self.log.new_entry(1, "Checking that the configuration is present", 0)
 
         if self.config_path.exists():
-            self.log.new_entry(1, "Configuration is present")
+            self.log.new_entry(1, "Configuration is present", 0)
             return True
         else:
-            self.log.new_entry(3, "Configuration could not be found at /usr/share/apollo/eleven/config.toml")
+            self.log.new_entry(3, "Configuration could not be found at /usr/share/apollo/eleven/config.toml}", 11)
             return False
