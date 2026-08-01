@@ -15,25 +15,27 @@ class ElevenInstallerServiceConfig():
 
     def load_config(self, *kwargs):
         with open ("/usr/share/apollo/eleven/config.toml", "rb") as config:
+            # Required/mandatory values
             try: 
                 data = tomllib.load(config)
 
                 self.os_name = data["info"]["os_name"]
-                self.experimental = data["info"]["experimental"]
 
                 self.filesystem = data["disks"]["filesystem"]
                 self.efi_size = data["disks"]["efi_size"]
 
                 self.target_image = data["bootc"]["target_image"]
-                self.use_composefs = data["bootc"]["use_composefs"]
                 self.image_source = data["bootc"]["source"]
-
-                return True
 
             except KeyError as e:
                 self.log.new_entry(3, _("Configuration has missing parameter: {parameter}").format(parameter=e), 12)
 
                 return False
+
+            # Optional/non-required values
+            self.use_composefs = data["bootc"]["use_composefs"]
+            self.experimental = data["info"]["experimental"]
+            return True
 
     def check_config_exists(self, *kwargs) -> bool:
         self.log.new_entry(1, "Checking that the configuration is present", 0)
