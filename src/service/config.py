@@ -9,6 +9,9 @@ class ElevenInstallerServiceConfig():
     def __init__(self, *kwargs, log):
         self.log = log
 
+        self.exists = False
+        self.valid = False
+
         # make sure certain values are set
         self.os_name = ""
         self.experimental = False
@@ -35,6 +38,7 @@ class ElevenInstallerServiceConfig():
             # Optional/non-required values
             self.use_composefs = data["bootc"]["use_composefs"]
             self.experimental = data["info"]["experimental"]
+            self.valid = True
             return True
 
     def check_config_exists(self, *kwargs) -> bool:
@@ -42,6 +46,7 @@ class ElevenInstallerServiceConfig():
 
         if self.config_path.exists():
             self.log.new_entry(1, "Configuration is present", 0)
+            self.exists = True
             return True
         else:
             self.log.new_entry(3, "Configuration could not be found at /usr/share/apollo/eleven/config.toml}", 11)

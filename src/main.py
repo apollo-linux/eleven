@@ -23,7 +23,6 @@ class ElevenApplication(Adw.Application):
         self.create_action('about', self.on_about_action)
         self.create_action('preferences', self.on_preferences_action)
         self.service = ElevenInstallerService()
-        self.service.log.new_entry(1, "Installation is starting now", 0)
 
     def do_activate(self):
         """Called when the application is activated.
@@ -35,7 +34,7 @@ class ElevenApplication(Adw.Application):
         if not win:
             win = ElevenWindow(application=self, service=self.service)
         
-        if not self.service.config.check_config_exists():
+        if not self.service.config.exists:
             # Catch out systems where the configuration is not filled in to ensure that Eleven doesn't mistakenly run in this situation
             no_config_dialog = Adw.AlertDialog.new(
                 heading = _(
@@ -49,7 +48,7 @@ class ElevenApplication(Adw.Application):
             no_config_dialog.add_response("close", _("Close"))
             no_config_dialog.connect("response", self.close_no_config_warning)
             no_config_dialog.present(None)
-        elif not self.service.config.load_config():
+        elif not self.service.config.valid:
             # Catch out systems where the configuration is missing settings to ensure that Eleven doesn't mistakenly run in this situation
             no_config_dialog = Adw.AlertDialog.new(
                 heading = _(
