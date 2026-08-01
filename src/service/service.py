@@ -7,4 +7,5 @@ class ElevenInstallerService():
     config = ElevenInstallerServiceConfig(log=log)
 
     def __init__(self, *kwargs):
-        self.config.load_config()
+        if self.config.check_config_exists():
+            self.config.load_config()
