@@ -49,6 +49,20 @@ class ElevenApplication(Adw.Application):
             no_config_dialog.add_response("close", _("Close"))
             no_config_dialog.connect("response", self.close_warning)
             no_config_dialog.present(None)
+        elif not self.service.config.load_config():
+            # Catch out systems where the configuration is missing settings to ensure that Eleven doesn't mistakenly run in this situation
+            no_config_dialog = Adw.AlertDialog.new(
+                heading = _(
+                    "Installer missing settings"
+                ),
+                body = _(
+                    "The installer configuration is missing settings. If you are an end user, please report this error to your OS vendor."
+                )
+            )
+            no_config_dialog.set_prefer_wide_layout(True)
+            no_config_dialog.add_response("close", _("Close"))
+            no_config_dialog.connect("response", self.close_warning)
+            no_config_dialog.present(None)
         else:
             win.present()
 

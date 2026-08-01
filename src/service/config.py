@@ -6,9 +6,14 @@ from gettext import gettext as _
 class ElevenInstallerServiceConfig():
     config_path = Path("/usr/share/apollo/eleven/config.toml")
 
-    def __init__(self,*kwargs, log):
+    def __init__(self, *kwargs, log):
         self.log = log
-        
+
+        # make sure certain values are set
+        self.os_name = ""
+        self.experimental = False
+
+    def load_config(self, *kwargs):
         with open ("/usr/share/apollo/eleven/config.toml", "rb") as config:
             try: 
                 data = tomllib.load(config)
@@ -16,8 +21,12 @@ class ElevenInstallerServiceConfig():
                 self.os_name = data["info"]["os_name"]
                 self.experimental = data["info"]["experimental"]
 
+                return True
+
             except KeyError as e:
                 self.log.new_entry(3, _("Configuration has missing parameter: {parameter}").format(parameter=e), 12)
+
+                return False
 
     def check_config_exists(self, *kwargs) -> bool:
         self.log.new_entry(1, "Checking that the configuration is present", 0)
