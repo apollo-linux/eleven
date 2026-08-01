@@ -1,6 +1,8 @@
 from pathlib import Path
 import tomllib
 
+from gettext import gettext as _
+
 class ElevenInstallerServiceConfig():
     config_path = Path("/usr/share/apollo/eleven/config.toml")
 
@@ -8,10 +10,14 @@ class ElevenInstallerServiceConfig():
         self.log = log
         
         with open ("/usr/share/apollo/eleven/config.toml", "rb") as config:
-            data = tomllib.load(config)
+            try: 
+                data = tomllib.load(config)
 
-            self.os_name = data["info"]["os_name"]
-            self.experimental = data["info"]["experimental"]
+                self.os_name = data["info"]["os_name"]
+                self.experimental = data["info"]["experimental"]
+
+            except KeyError as e:
+                self.log.new_entry(3, _("Configuration has missing parameter: {parameter}").format(parameter=e))
 
     def check_config_exists(self, *kwargs) -> bool:
         self.log.new_entry(1, "Checking that the configuration is present")
