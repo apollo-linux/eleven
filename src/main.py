@@ -42,12 +42,12 @@ class ElevenApplication(Adw.Application):
                     "Installer not configured"
                 ),
                 body = _(
-                    "The configuration file for the installer is not present. If you are an end user, please report this error to your OS vendor."
+                    "The configuration file for the installer is not present. If you are an end user, please report this error to your OS vendor. [Error 11]"
                 )
             )
             no_config_dialog.set_prefer_wide_layout(True)
             no_config_dialog.add_response("close", _("Close"))
-            no_config_dialog.connect("response", self.close_warning)
+            no_config_dialog.connect("response", self.close_no_config_warning)
             no_config_dialog.present(None)
         elif not self.service.config.load_config():
             # Catch out systems where the configuration is missing settings to ensure that Eleven doesn't mistakenly run in this situation
@@ -56,12 +56,12 @@ class ElevenApplication(Adw.Application):
                     "Installer missing settings"
                 ),
                 body = _(
-                    "The installer configuration is missing settings. If you are an end user, please report this error to your OS vendor."
+                    "The installer configuration is missing settings. If you are an end user, please report this error to your OS vendor. [Error 12]"
                 )
             )
             no_config_dialog.set_prefer_wide_layout(True)
             no_config_dialog.add_response("close", _("Close"))
-            no_config_dialog.connect("response", self.close_warning)
+            no_config_dialog.connect("response", self.close_broken_config_warning)
             no_config_dialog.present(None)
         else:
             win.present()
@@ -97,8 +97,11 @@ class ElevenApplication(Adw.Application):
         if shortcuts:
             self.set_accels_for_action(f"app.{name}", shortcuts)
 
-    def close_warning(dialog, response, *args):
-        quit(1)
+    def close_no_config_warning(dialog, response, *args):
+        quit(11)
+
+    def close_broken_config_warning(dialog, response, *args):
+        quit(12)
 
 def main(version):
     """The application's entry point."""

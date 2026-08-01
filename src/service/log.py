@@ -13,8 +13,8 @@ class ElevenInstallerServiceLogging:
 
     def new_entry(self, type, message, error_code):
         error_msg = ""
-        
-        if error_code != 0:
-            error_msg = "error {error_code}"
 
-        print(f"{self.types(type)}: {message} [{dt.datetime.now()}] {error_msg}")
+        if error_code != 0:
+            error_msg = f" [{error_code}]"
+
+        print(f"{self.types(type)}{error_msg}: {message} [{dt.datetime.now()}]")
