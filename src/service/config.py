@@ -21,6 +21,13 @@ class ElevenInstallerServiceConfig():
                 self.os_name = data["info"]["os_name"]
                 self.experimental = data["info"]["experimental"]
 
+                self.filesystem = data["disks"]["filesystem"]
+                self.efi_size = data["disks"]["efi_size"]
+
+                self.target_image = data["bootc"]["target_image"]
+                self.use_composefs = data["bootc"]["use_composefs"]
+                self.image_source = data["bootc"]["source"]
+
                 return True
 
             except KeyError as e:
