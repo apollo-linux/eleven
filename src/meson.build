@@ -42,7 +42,8 @@ configure_file(
 service_sources = [
   'service/service.py',
   'service/config.py',
-  'service/log.py'
+  'service/log.py',
+  'service/partitioner.py'
 ]
 
 page_sources = [
