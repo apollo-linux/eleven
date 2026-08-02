@@ -17,21 +17,21 @@ class ElevenInstallerServicePartitioner():
 
         drives = dict()
 
-        nvme_drives = subprocess.check_output("lsblk -J -N -b -o NAME,SIZE,MODEL", shell=True)
+        nvme_drives = subprocess.check_output("lsblk -J -p -N -b -o NAME,SIZE,MODEL", shell=True)
 
         if nvme_drives != "":
             nvme_drives = json.loads(
                 nvme_drives
             )["blockdevices"]
 
-        scsi_drives = subprocess.check_output("lsblk -J -S -b -o NAME,SIZE,MODEL", shell=True)
+        scsi_drives = subprocess.check_output("lsblk -J -p -S -b -o NAME,SIZE,MODEL", shell=True)
 
         if scsi_drives != "":
             scsi_drives = json.loads(
                 scsi_drives
             )["blockdevices"]
 
-        virtio_drives = subprocess.check_output("lsblk -J -v -b -o NAME,SIZE,MODEL", shell=True)
+        virtio_drives = subprocess.check_output("lsblk -J -p -v -b -o NAME,SIZE,MODEL", shell=True)
 
         if virtio_drives != "":
             virtio_drives = json.loads(
