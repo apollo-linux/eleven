@@ -20,8 +20,6 @@ class ElevenApplication(Adw.Application):
                          flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
                          resource_base_path='/dev/getapollo/Eleven')
         self.create_action('quit', lambda *_: self.quit(), ['<control>q'])
-        self.create_action('about', self.on_about_action)
-        self.create_action('preferences', self.on_preferences_action)
         self.service = ElevenInstallerService()
 
     def do_activate(self):
@@ -64,22 +62,6 @@ class ElevenApplication(Adw.Application):
             no_config_dialog.present(None)
         else:
             win.present()
-
-    def on_about_action(self, *args):
-        """Callback for the app.about action."""
-        about = Adw.AboutDialog(application_name='Eleven',
-                                application_icon='dev.getapollo.Eleven',
-                                developer_name='Izzy',
-                                version='0.1.0',
-                                # Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-                                translator_credits = _('translator-credits'),
-                                developers=['Izzy'],
-                                copyright='© 2026 Izzy')
-        about.present(self.props.active_window)
-
-    def on_preferences_action(self, widget, _):
-        """Callback for the app.preferences action."""
-        print('app.preferences action activated')
 
     def create_action(self, name, callback, shortcuts=None):
         """Add an application action.
