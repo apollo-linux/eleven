@@ -7,5 +7,7 @@
     <file preprocess="xml-stripblanks" alias="welcome.ui">pages/welcome.ui</file>
     <file preprocess="xml-stripblanks" alias="disks.ui">pages/disks.ui</file>
     <file preprocess="xml-stripblanks" alias="experimental.ui">pages/experimental.ui</file>
+
+    <file preprocess="xml-stripblanks">icons/scalable/actions/experimental-symbolic.svg</file>
   </gresource>
 </gresources>
