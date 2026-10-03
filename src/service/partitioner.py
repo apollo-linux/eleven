@@ -1,16 +1,39 @@
-from pathlib import Path
-
+from dataclasses import dataclass
 import subprocess, json
 
-class ElevenInstallerServicePartitionerDrive():
-    def __init__(self, *kwargs, id, size, model):
-        self.id = id
-        self.size = size
-        self.model = model
+@dataclass
+class ElevenDiskPartitionerDrive():
+    id: str
+    size: str
+    model: str
+
+# Command itself might fail, make sure to follow handle exceptions from subprocess.run
+def _get_lsblk_output(args: list[str]) -> list[dict[str,str]]:
+    return json.loads(subprocess.run(args, capture_output=True).stdout)["blockdevices"]
 
 class ElevenInstallerServicePartitioner():
     def __init__(self, *kwargs, log):
         self.log = log
+
+    scan_ran: bool = False
+    drives: list[ElevenDiskPartitionerDrive] = []
+
+    # Do not overuse this function, we do not want to keep probing devices all the time due to things like old disk drives spinning up
+    def scan_drives(self):
+        scan_ran = True # Initial drive scanning tag, no more automated runs after that
+        nvme_drives = _get_lsblk_output(["lsblk","-J","-p","-N","-o","NAME,SIZE,MODEL"])
+        scsi_drives = _get_lsblk_output(["lsblk","-J","-p","-S","-o","NAME,SIZE,MODEL"])
+        virtio_drives = _get_lsblk_output(["lsblk","-J","-p","-v","-o","NAME,SIZE,MODEL"])
+
+        drives_raw = nvme_drives + scsi_drives + virtio_drives
+
+        self.drives = list(map(lambda x: ElevenDiskPartitionerDrive(id=x['name'], size=x['size'], model=x['model']), drives_raw))
+
+    # Will scan drives if no drives were found previously
+    def get_drives(self) -> list[ElevenDiskPartitionerDrive]:
+        if not self.scan_ran:
+            self.scan_drives()
+        return self.drives
 
     def list_all_drives(self, *kwargs):
         self.drives = []
@@ -42,7 +65,7 @@ class ElevenInstallerServicePartitioner():
 
         for x in drives:
             self.drives.append(
-                ElevenInstallerServicePartitionerDrive(
+                ElevenDiskPartitionerDrive(
                     id=x['name'],
                     size=x['size'],
                     model=x['model']

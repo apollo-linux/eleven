@@ -17,4 +17,8 @@ class ElevenInstallerService():
         if self.config.exists and self.config.valid:
             self.log.new_entry(1, "Configuration exists and is valid. Starting installer", 0)
 
-        self.disks.list_all_drives()
+        try:
+            for x in self.disks.get_drives():
+                self.log.new_entry(1, f"Found drive: {x.id} [{x.size}B, {x.model}]", 0)
+        except:
+            self.log.new_entry(3, "FATAL: failed scanning drives", 1)
