@@ -2,25 +2,55 @@ using Gtk 4.0;
 using Adw 1;
 
 template $ElevenDisksPage: Adw.Bin {
-child: Adw.ToolbarView {
+    child: Adw.ToolbarView {
         [top]
         Adw.HeaderBar {
             show-title: false;
             show-start-title-buttons: false;
             show-end-title-buttons: false;
+
+            [end]
+            Gtk.Button {
+                label: _("Install");
+            }
         }
 
-        Box main_box {
-            halign: center;
-            orientation: horizontal;
-            spacing: 16;
-            
-            Label {
-                label: _("Where to Install?");
+        Adw.StatusPage select_disk {
+            title: _("Install location");
+            icon-name: "drive-harddisk-symbolic";
 
-                styles [
-                    "title-1"
-                ]
+            Gtk.Box {
+                halign: center;
+                orientation: vertical;
+                spacing: 16;
+
+                Gtk.ListBox disks_list {
+                    hexpand: true;
+                    valign: start;
+                    // We could use this instead, no idea how to bind the Drive objects to it though, FIXME: take a look at this as an option for selecting.
+                    selection-mode: none;
+                    styles [
+                      "boxed-list",
+                    ]
+                }
+
+                Gtk.ListBox {
+                    hexpand: true;
+                    valign: start;
+                    selection-mode: none;
+                    styles [
+                      "boxed-list",
+                    ]
+
+                    Adw.SwitchRow disk_encryption {
+                        title: _("Enable Disk Encryption");
+                    }
+
+                    Adw.SwitchRow tpm_unlock {
+                        title: _("Enable TPM Unlock");
+                        subtitle: _("Automatically unlock the drive on startup");
+                    }
+                }
             }
         }
     };
