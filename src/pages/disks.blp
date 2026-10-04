@@ -10,12 +10,26 @@ template $ElevenDisksPage: Adw.Bin {
             show-end-title-buttons: false;
 
             [end]
-            Gtk.Button {
+            Gtk.Button install_button {
                 label: _("Install");
+                sensitive: false;
+                clicked => $on_install_button_clicked();
             }
         }
 
-        Adw.StatusPage select_disk {
+        Adw.AlertDialog alert_idk {
+            heading: _("Install {os_name} to Disk");
+            body: _("All data in {disk_name} will be erased. Make sure everthing important is backed up");
+
+            responses [
+                continue: _("Erase and start the installation") destructive,
+                cancel: _("Go back"),
+            ]
+
+            close-response: "cancel";
+        }
+    
+        Adw.StatusPage {
             title: _("Install location");
             icon-name: "drive-harddisk-symbolic";
 
@@ -44,11 +58,14 @@ template $ElevenDisksPage: Adw.Bin {
 
                     Adw.SwitchRow disk_encryption {
                         title: _("Enable Disk Encryption");
+                        notify::active => $on_toggle_disk_encryption();
                     }
 
                     Adw.SwitchRow tpm_unlock {
                         title: _("Enable TPM Unlock");
                         subtitle: _("Automatically unlock the drive on startup");
+                        sensitive: bind disk_encryption.active as <bool>;
+                        notify::active => $on_toggle_tpm_unlock();
                     }
                 }
             }
