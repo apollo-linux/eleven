@@ -2,12 +2,15 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Adw, Gio, Gtk
+from gi.repository import Adw, GObject, Gio, Gtk
 
 
 @Gtk.Template(resource_path="/dev/getapollo/Eleven/disks.ui")
 class ElevenDisksPage(Adw.Bin):
     __gtype_name__ = "ElevenDisksPage"
+    __gsignals__ = {
+        "proceed-disks-page": (GObject.SignalFlags.RUN_FIRST, None, (str,)),
+    }
 
     disks_list: Gtk.ListBox = Gtk.Template.Child()
     tpm_unlock: Adw.SwitchRow = Gtk.Template.Child()
@@ -27,6 +30,11 @@ class ElevenDisksPage(Adw.Bin):
             self.selected_drive = drive
             self.install_button.set_sensitive(True)
             print(self.selected_drive)
+            self.alert_idk.set_body(
+                str(self.alert_idk.get_body()).format(
+                    disk_name=self.selected_drive.model
+                )
+            )
         else:
             self.selected_drive = None
             self.install_button.set_sensitive(False)
@@ -48,7 +56,7 @@ class ElevenDisksPage(Adw.Bin):
     ):
         response = dialog.choose_finish(task)
         if response == "continue":
-            print("Continuing somehow")
+            self.emit("proceed-disks-page", "")
 
     @Gtk.Template.Callback()
     def on_install_button_clicked(self, element: Gtk.Button):
@@ -60,6 +68,12 @@ class ElevenDisksPage(Adw.Bin):
         super().__init__(**kwargs)
 
         self.service = service
+
+        self.alert_idk.set_heading(
+            str(self.alert_idk.get_heading()).format(
+                os_name=self.service.config.os_name
+            )
+        )
 
         drives_model = self.service.disks.get_drives()
         select_drive_check = Gtk.CheckButton()
