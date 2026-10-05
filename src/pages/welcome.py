@@ -28,12 +28,14 @@ class ElevenWelcomePage(Adw.Bin):
 
         # Translators: os_name is the name of the operating system being installed
         self.status_page.set_description(
-            _(
-                "You can try {os_name} out in the live environment. When you're ready to install, you can use this program to install {os_name} to this device"
-            ).format(os_name=self.service.config.os_name)
+            str(self.status_page.get_description()).format(
+                os_name=self.service.config.os_name
+            )
         )
 
         # Translators: os_name is the name of the operating system being installed
         self.install_btn.set_label(
-            _("Install {os_name}").format(os_name=self.service.config.os_name)
+            str(self.install_btn.get_label()).format(
+                os_name=self.service.config.os_name
+            )
         )
