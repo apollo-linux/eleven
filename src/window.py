@@ -4,15 +4,18 @@ from gi.repository import Gtk
 from .welcome import ElevenWelcomePage
 from .disks import ElevenDisksPage
 from .experimental import ElevenExperimentalPage
+from .installation import ElevenInstallationPage
 
 from gettext import gettext as _
 
-@Gtk.Template(resource_path='/dev/getapollo/Eleven/window.ui')
+
+@Gtk.Template(resource_path="/dev/getapollo/Eleven/window.ui")
 class ElevenWindow(Adw.ApplicationWindow):
-    __gtype_name__ = 'ElevenWindow'
+    __gtype_name__ = "ElevenWindow"
 
     welcome_view = Gtk.Template.Child()
     disks_view = Gtk.Template.Child()
+    installation_view = Gtk.Template.Child()
     stack = Gtk.Template.Child()
 
     def __init__(self, service, **kwargs):
@@ -20,11 +23,19 @@ class ElevenWindow(Adw.ApplicationWindow):
 
         self.service = service
 
-        self.welcome_page = ElevenWelcomePage(self.service)
-        self.disks_page = ElevenDisksPage(self.service)
+        self.welcome_page: ElevenWelcomePage = ElevenWelcomePage(self.service)
+        self.disks_page: ElevenDisksPage = ElevenDisksPage(self.service)
+        self.installation_page: ElevenInstallationPage = ElevenInstallationPage(
+            self.service
+        )
 
         self.welcome_view.set_child(self.welcome_page)
         self.disks_view.set_child(self.disks_page)
+        self.installation_view.set_child(self.installation_page)
+
+        self.disks_page.connect(
+            "proceed-disks-page", self.show_installation_view
+        )
 
         if service.config.experimental:
             self.experimental_view = Adw.NavigationPage()
@@ -32,7 +43,9 @@ class ElevenWindow(Adw.ApplicationWindow):
             self.experimental_page = ElevenExperimentalPage(self.service)
             self.experimental_view.set_child(self.experimental_page)
 
-            self.experimental_page.proceed_button.connect("clicked", self.acknowledge_experimental_warning)
+            self.experimental_page.proceed_button.connect(
+                "clicked", self.acknowledge_experimental_warning
+            )
 
             self.stack.replace(
                 [
@@ -44,7 +57,7 @@ class ElevenWindow(Adw.ApplicationWindow):
 
         self.welcome_page.try_btn.connect("clicked", self.try_os)
         self.welcome_page.install_btn.connect("clicked", self.show_disks_view)
-    
+
     def try_os(self, _button):
         self.close()
 
@@ -53,3 +66,11 @@ class ElevenWindow(Adw.ApplicationWindow):
 
     def show_disks_view(self, _button):
         self.stack.push(self.disks_view)
+
+    def show_installation_view(self, _view, _something):
+        self.stack.replace(
+            [
+                self.installation_view,
+            ]
+        )
+        self.stack.pop_to_page(self.installation_view)

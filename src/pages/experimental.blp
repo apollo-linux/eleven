@@ -13,11 +13,10 @@ template $ElevenExperimentalPage: Adw.Bin {
         Adw.StatusPage status_page {
             title: _("Experimental Software");
             icon-name: "experimental-symbolic";
+            description: _("This build of {os_name} is experimental software and may not be safe to use in production. You should only continue if you know what you’re doing");
 
-            Box {
+            Adw.Bin {
                 halign: center;
-                orientation: horizontal;
-                spacing: 16;
 
                 Button proceed_button {
                     label: _("Proceed Anyway");

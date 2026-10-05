@@ -1,0 +1,33 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $ElevenInstallationPage: Adw.Bin {
+    child: Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {
+            show-title: false;
+            show-start-title-buttons: false;
+            show-end-title-buttons: false;
+
+            [end]
+            Gtk.Button {
+                tooltip-text: _("Show verbose terminal output");
+                icon-name: "utilities-terminal-symbolic";
+                styles [
+                    "pill"
+                ]
+            }
+        }
+
+
+        Adw.StatusPage status_page {
+            title: _("Installating {os_name}");
+            description: _("Do not turn off the power.");
+            icon-name: "system-logo-white";
+
+            Adw.Spinner {
+              height-request: 40;
+            }
+        }
+    };
+}
